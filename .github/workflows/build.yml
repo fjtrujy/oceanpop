@@ -2,6 +2,7 @@ name: Build
 
 on:
   push:
+  workflow_dispatch: {}
 
 jobs:
   Linux:
@@ -86,6 +87,20 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+
+      # To be removed once the fjtrujy fork is part of PSPDEV
+      - name: Install fjtrujy SDL2 fork
+        run: |
+          git clone -b pspRefactorRender https://github.com/fjtrujy/SDL.git
+          cd SDL
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_TOOLCHAIN_FILE=$PSPDEV/psp/share/pspdev.cmake  -DCMAKE_INSTALL_PREFIX=$PSPDEV/psp \
+            -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=OFF -DSDL_TESTS=OFF ..
+          make -j $(getconf _NPROCESSORS_ONLN)
+          make -j $(getconf _NPROCESSORS_ONLN) install
+
+
       - name: Build
         run: |
           mkdir oceanpop && cd oceanpop
