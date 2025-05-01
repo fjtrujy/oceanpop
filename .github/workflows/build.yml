@@ -112,6 +112,7 @@ jobs:
         with:
           name: oceanpop-psp
           path: |
+            oceanpop/oceanpop.prx
             oceanpop/EBOOT.PBP
             oceanpop/assets
 

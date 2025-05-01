@@ -268,6 +268,7 @@ if (VITA)
         FILE "${ASSETS_LANGUAGES}" assets/languages
     )
 elseif(PLATFORM_PSP)
+    set(BUILD_PRX ON)
     create_pbp_file(
         TARGET ${CMAKE_PROJECT_NAME}
         ICON_PATH ${CMAKE_SOURCE_DIR}/platform/psp/icon.png
